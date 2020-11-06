@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSOurce" ref="dataSource" />
+        <property name="configLocation" value="classpath:src/main/java/config/SqlMapConfig.xml" />
+        <property name="mapperLocations" >
+            <list>
+                <value>classpath:src/main/java/config/User.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory" />
+    </bean>
+
+    <bean id="hello" class="myspring.di.xml.Hello">
+        <!-- setName(name) -->
+        <property name="name" value="Spring"/>
+        <!-- setPrinter(Printer) -->
+        <property name="printer" ref="printer"/>
+    </bean>
+
+    <bean id="printer" class="myspring.di.xml.StringPrinter"/>
+    <bean id="consolePrinter" class="myspring.di.xml.ConsolePrinter"/>
+
+</beans>
